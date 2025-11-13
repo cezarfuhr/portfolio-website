@@ -1,35 +1,49 @@
 # 🚀 Portfolio Developer Showcase
 
-Um portfólio profissional completo com Backend (Node.js + Express + Prisma) e Frontend (Next.js 14 + TypeScript + Tailwind CSS) para demonstração de projetos de desenvolvimento.
+A complete professional portfolio with Backend (Node.js + Express + Prisma) and Frontend (Next.js 14 + TypeScript + Tailwind CSS) for showcasing development projects.
 
-## ✨ Funcionalidades
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-### 🎯 CORE (Implementado)
+## ✨ Features
 
-- ✅ **Backend API completo**
-  - Autenticação JWT
-  - CRUD de Projetos
-  - CRUD de Skills
-  - CRUD de Experiências Profissionais
-  - CRUD de Educação
-  - CRUD de Certificados
-  - Integração com GitHub API
-  - Gerador de CV em PDF
+### ✅ Fully Implemented
 
-- ✅ **Configuração Frontend**
-  - Next.js 14 com App Router
-  - TypeScript
-  - Tailwind CSS
-  - API Client configurado
+#### **Backend API**
+- 🔐 JWT Authentication
+- 📦 Complete CRUD for Projects, Skills, Experience, Education, Certificates
+- 🐙 GitHub API Integration
+- 📄 PDF CV Generator (PDFKit)
+- 🔒 Role-based access control
+- ✅ Data validation (Zod)
+- 📊 Analytics tracking
+- 🚀 RESTful API with Express
 
-### 🎨 Extras Implementados
+#### **Frontend Application**
+- 🏠 **Home Page** - Hero section, stats, and featured projects
+- 📁 **Projects Page** - Filterable and searchable project listing
+- 🔍 **Project Detail** - Full project view with markdown rendering
+- 👤 **About Page** - Skills, experience timeline, bio
+- 📧 **Contact Page** - Contact form and information
+- 🔐 **Admin Panel** - Login and dashboard for content management
+- 📱 Fully responsive design
+- 🎨 Modern UI with Shadcn/UI components
+- ⚡ Optimized performance with Next.js 14
 
-- ✅ **GitHub Stats Dashboard** - Estatísticas automáticas do GitHub
-- ✅ **CV Downloadable** - Geração automática de currículo em PDF
-- ✅ **Skills & Timeline** - Sistema completo de habilidades e experiências
-- ✅ **Availability Status** - Status de disponibilidade para trabalho
+#### **Additional Features**
+- 📊 **GitHub Stats Dashboard** - Automatic GitHub statistics
+- 📥 **Downloadable CV** - Auto-generated PDF resume
+- 🎯 **Skills & Timeline** - Complete skills and experience system
+- 🟢 **Availability Status** - Work availability indicator
+- 🏷️ **Tag System** - Organize projects with tags
+- 🌐 **30 Sample Projects** - Pre-seeded with realistic data
 
-## 📋 Stack Tecnológica
+## 🛠️ Tech Stack
 
 ### Backend
 - **Runtime**: Node.js
@@ -43,365 +57,363 @@ Um portfólio profissional completo com Backend (Node.js + Express + Prisma) e F
 - **GitHub Integration**: Octokit
 
 ### Frontend
-- **Framework**: Next.js 14
+- **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: Radix UI (Shadcn/UI)
-- **Animations**: Framer Motion
+- **Icons**: Lucide React
 - **HTTP Client**: Axios
-- **State Management**: Zustand
+- **Markdown**: React Markdown
 
-## 📁 Estrutura do Projeto
+## 🚀 Quick Start with Docker
 
-```
-portfolio-website/
-├── backend/                     # API Backend
-│   ├── prisma/
-│   │   ├── schema.prisma       # Schema do banco de dados
-│   │   └── seed.ts             # Dados iniciais
-│   ├── src/
-│   │   ├── config/             # Configurações (env, database)
-│   │   ├── controllers/        # Controladores
-│   │   ├── middlewares/        # Middlewares (auth, error, validation)
-│   │   ├── routes/             # Rotas da API
-│   │   ├── services/           # Lógica de negócio
-│   │   ├── utils/              # Utilitários
-│   │   └── server.ts           # Servidor Express
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── .env.example
-│
-├── frontend/                    # Next.js Application
-│   ├── src/
-│   │   ├── app/                # App Router
-│   │   ├── components/         # Componentes React
-│   │   ├── lib/                # Bibliotecas (api, utils)
-│   │   └── types/              # Tipos TypeScript
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── tailwind.config.ts
-│   └── .env.example
-│
-├── shared/                      # Tipos compartilhados
-│   └── types/
-│
-└── README.md
+The easiest way to run the entire stack:
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd portfolio-website
+
+# Start everything with Docker Compose
+docker-compose up
+
+# Access the application
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:5000
+# Database: localhost:5432
 ```
 
-## 🚀 Como Executar
+That's it! The application will:
+- ✅ Start PostgreSQL database
+- ✅ Run database migrations
+- ✅ Seed with 30 sample projects
+- ✅ Start backend API
+- ✅ Start frontend application
 
-### Pré-requisitos
+## 📋 Manual Setup
+
+### Prerequisites
 
 - Node.js 18+
 - PostgreSQL 14+
-- npm ou yarn
+- npm or yarn
 - Git
 
-### 1. Configurar o Backend
+### 1. Backend Setup
 
 ```bash
-# Navegar para pasta do backend
+# Navigate to backend
 cd backend
 
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Copiar arquivo de ambiente
+# Copy environment file
 cp .env.example .env
 
-# Editar .env com suas configurações
+# Edit .env with your configuration
 # DATABASE_URL, JWT_SECRET, GITHUB_TOKEN, etc.
 ```
 
-**Configurar `.env`:**
+**Configure `.env`:**
 
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/portfolio_db"
 PORT=5000
 NODE_ENV=development
-JWT_SECRET=seu-secret-super-seguro-aqui
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
 JWT_EXPIRES_IN=7d
 ADMIN_EMAIL=admin@portfolio.com
 ADMIN_PASSWORD=admin123
-GITHUB_TOKEN=seu-github-token-aqui
-GITHUB_USERNAME=seu-usuario-github
+GITHUB_TOKEN=your-github-personal-access-token
+GITHUB_USERNAME=your-github-username
 CORS_ORIGIN=http://localhost:3000
 ```
 
-**Configurar banco de dados:**
+**Setup database:**
 
 ```bash
-# Gerar Prisma Client
+# Generate Prisma Client
 npm run prisma:generate
 
-# Executar migrations
+# Run migrations
 npm run prisma:migrate
 
-# Popular banco com dados iniciais
+# Seed database with sample data
 npm run prisma:seed
 ```
 
-**Executar backend:**
+**Run backend:**
 
 ```bash
-# Modo desenvolvimento
+# Development mode
 npm run dev
 
-# Compilar para produção
+# Production build
 npm run build
-
-# Executar produção
 npm start
 ```
 
-O backend estará rodando em: `http://localhost:5000`
+Backend will be running at: `http://localhost:5000`
 
-### 2. Configurar o Frontend
+### 2. Frontend Setup
 
 ```bash
-# Navegar para pasta do frontend
+# Navigate to frontend
 cd frontend
 
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Copiar arquivo de ambiente
+# Copy environment file
 cp .env.example .env.local
 
-# Editar .env.local
+# Edit .env.local
 # NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
-**Executar frontend:**
+**Run frontend:**
 
 ```bash
-# Modo desenvolvimento
+# Development mode
 npm run dev
 
-# Build produção
+# Production build
 npm run build
-
-# Executar produção
 npm start
 ```
 
-O frontend estará rodando em: `http://localhost:3000`
+Frontend will be running at: `http://localhost:3000`
 
-## 📡 Endpoints da API
+## 📁 Project Structure
 
-### Autenticação
 ```
-POST   /api/auth/login          # Login
-GET    /api/auth/me             # Usuário atual
-PUT    /api/auth/change-password # Trocar senha
+portfolio-website/
+├── backend/                    # Express API
+│   ├── prisma/
+│   │   ├── schema.prisma      # Database schema
+│   │   └── seed.ts            # Sample data (30 projects)
+│   ├── src/
+│   │   ├── config/            # Configuration
+│   │   ├── controllers/       # Route controllers
+│   │   ├── middlewares/       # Auth, validation, errors
+│   │   ├── routes/            # API routes
+│   │   ├── services/          # Business logic
+│   │   ├── utils/             # Utilities
+│   │   └── server.ts          # Express server
+│   ├── Dockerfile
+│   └── package.json
+│
+├── frontend/                   # Next.js App
+│   ├── src/
+│   │   ├── app/               # Pages (App Router)
+│   │   │   ├── page.tsx       # Home
+│   │   │   ├── projects/      # Projects pages
+│   │   │   ├── about/         # About page
+│   │   │   ├── contact/       # Contact page
+│   │   │   └── admin/         # Admin panel
+│   │   ├── components/        # React components
+│   │   │   ├── ui/            # UI components
+│   │   │   └── layout/        # Layout components
+│   │   ├── lib/               # API client, utils
+│   │   ├── types/             # TypeScript types
+│   │   └── middleware.ts      # Route protection
+│   ├── Dockerfile
+│   └── package.json
+│
+├── docker-compose.yml          # Docker orchestration
+├── .dockerignore
+└── README.md
 ```
 
-### Projetos
+## 🔑 Default Credentials
+
+After running the seed:
+
 ```
-GET    /api/projects            # Listar projetos
-GET    /api/projects/:slug      # Detalhes do projeto
-POST   /api/projects            # Criar projeto (Admin)
-PUT    /api/projects/:id        # Atualizar projeto (Admin)
-DELETE /api/projects/:id        # Deletar projeto (Admin)
-POST   /api/projects/:id/like   # Curtir projeto
-GET    /api/projects/stats      # Estatísticas
+Email: admin@portfolio.com
+Password: admin123
+```
+
+**⚠️ IMPORTANT: Change these credentials in production!**
+
+## 📡 API Endpoints
+
+### Authentication
+```
+POST   /api/auth/login              # Login
+GET    /api/auth/me                 # Current user
+PUT    /api/auth/change-password    # Change password
+```
+
+### Projects
+```
+GET    /api/projects                # List projects (with filters)
+GET    /api/projects/:slug          # Project details
+POST   /api/projects                # Create project (Admin)
+PUT    /api/projects/:id            # Update project (Admin)
+DELETE /api/projects/:id            # Delete project (Admin)
+POST   /api/projects/:id/like       # Like project
+GET    /api/projects/stats          # Statistics
 ```
 
 ### GitHub
 ```
-GET    /api/github/profile      # Perfil GitHub
-GET    /api/github/repos        # Repositórios
-GET    /api/github/stats        # Estatísticas GitHub
-POST   /api/github/sync         # Sincronizar stats (Admin)
+GET    /api/github/profile          # GitHub profile
+GET    /api/github/repos            # Repositories
+GET    /api/github/stats            # GitHub statistics
+POST   /api/github/sync             # Sync repo stats (Admin)
 ```
 
 ### Skills
 ```
-GET    /api/skills              # Listar skills
-POST   /api/skills              # Criar skill (Admin)
-PUT    /api/skills/:id          # Atualizar skill (Admin)
-DELETE /api/skills/:id          # Deletar skill (Admin)
-PUT    /api/skills/reorder      # Reordenar skills (Admin)
+GET    /api/skills                  # List skills
+POST   /api/skills                  # Create skill (Admin)
+PUT    /api/skills/:id              # Update skill (Admin)
+DELETE /api/skills/:id              # Delete skill (Admin)
+PUT    /api/skills/reorder          # Reorder skills (Admin)
 ```
 
-### Perfil
+### Profile
 ```
-GET    /api/profile             # Dados do perfil
-PUT    /api/profile             # Atualizar perfil (Admin)
-
-GET    /api/profile/experiences # Experiências
-POST   /api/profile/experiences # Criar (Admin)
-PUT    /api/profile/experiences/:id
-DELETE /api/profile/experiences/:id
-
-GET    /api/profile/education   # Educação
-POST   /api/profile/education
-PUT    /api/profile/education/:id
-DELETE /api/profile/education/:id
-
-GET    /api/profile/certificates # Certificados
-POST   /api/profile/certificates
-PUT    /api/profile/certificates/:id
-DELETE /api/profile/certificates/:id
-
-GET    /api/profile/cv/download # Download CV em PDF
+GET    /api/profile                 # Profile data
+PUT    /api/profile                 # Update profile (Admin)
+GET    /api/profile/experiences     # Work experiences
+GET    /api/profile/education       # Education
+GET    /api/profile/certificates    # Certificates
+GET    /api/profile/cv/download     # Download CV as PDF
 ```
 
-## 🗄️ Modelos do Banco de Dados
+See [API Documentation](./API_DOCUMENTATION.md) for detailed examples.
 
-### User
-- Autenticação e autorização
-- Roles: ADMIN, VIEWER
+## 🗄️ Database Models
 
-### Project
-- Informações do projeto
-- Categorias: FRONTEND, BACKEND, FULLSTACK, AI_ML, CLOUD, etc
-- Status: DRAFT, PUBLISHED, ARCHIVED
-- Integração com GitHub
+- **User** - Authentication and authorization
+- **Project** - Project information with GitHub integration
+- **Skill** - Technical skills with proficiency levels
+- **Experience** - Work experience timeline
+- **Education** - Academic background
+- **Certificate** - Professional certifications
+- **SiteSettings** - Site-wide configuration
+- **Tag** - Project categorization
+- **ContactMessage** - Contact form submissions
+- **Analytics** - Usage tracking
 
-### Skill
-- Habilidades técnicas
-- Níveis (0-100)
-- Categorias
-
-### Experience
-- Experiências profissionais
-- Timeline de carreira
-
-### Education
-- Formação acadêmica
-
-### Certificate
-- Certificações profissionais
-
-### SiteSettings
-- Configurações gerais do site
-- Informações pessoais
-- Links sociais
-- SEO
-
-## 🔑 Credenciais Padrão
-
-Após executar o seed:
-
-```
-Email: admin@portfolio.com
-Senha: admin123
-```
-
-**⚠️ IMPORTANTE: Altere estas credenciais em produção!**
-
-## 🎨 Próximos Passos para Implementação
-
-### Frontend - Páginas Públicas
-
-1. **Home Page** (`/src/app/page.tsx`)
-   - Hero section
-   - Projetos em destaque
-   - GitHub stats
-   - Call-to-action
-
-2. **Projects Page** (`/src/app/projects/page.tsx`)
-   - Grid de projetos
-   - Filtros (categoria, tags)
-   - Busca
-
-3. **Project Detail** (`/src/app/projects/[slug]/page.tsx`)
-   - Detalhes completos
-   - Galeria de imagens
-   - Markdown rendering
-
-4. **About Page** (`/src/app/about/page.tsx`)
-   - Bio
-   - Skills
-   - Experience timeline
-   - Education
-   - Certificates
-
-5. **Contact Page** (`/src/app/contact/page.tsx`)
-   - Formulário de contato
-   - Links sociais
-
-### Frontend - Painel Admin
-
-1. **Login** (`/src/app/admin/login/page.tsx`)
-2. **Dashboard** (`/src/app/admin/dashboard/page.tsx`)
-3. **Projects Management** (`/src/app/admin/projects/page.tsx`)
-4. **Skills Management** (`/src/app/admin/skills/page.tsx`)
-5. **Profile Settings** (`/src/app/admin/settings/page.tsx`)
-
-### Componentes UI Necessários
-
-- Button, Card, Input, Select, Dialog
-- ProjectCard, SkillCard
-- Header, Footer, Navigation
-- Forms (React Hook Form)
-- Charts (Recharts para stats)
-
-## 🛠️ Scripts Disponíveis
+## 📦 Deployment
 
 ### Backend
-```bash
-npm run dev          # Desenvolvimento
-npm run build        # Build
-npm start            # Produção
-npm run prisma:generate  # Gerar Prisma Client
-npm run prisma:migrate   # Migrations
-npm run prisma:seed      # Popular BD
-npm run prisma:studio    # Prisma Studio
-```
+
+**Recommended platforms:**
+- Railway
+- Render
+- Heroku
+- AWS/DigitalOcean
+
+**Requirements:**
+- PostgreSQL database (Railway/Supabase/AWS RDS)
+- Environment variables configured
+- Run migrations before starting
 
 ### Frontend
-```bash
-npm run dev          # Desenvolvimento
-npm run build        # Build
-npm start            # Produção
-npm run lint         # ESLint
-```
 
-## 🌟 Recursos Extras Sugeridos
-
-1. **Blog Técnico** - Sistema de artigos
-2. **Newsletter** - Captura de emails
-3. **Analytics** - Google Analytics/Plausible
-4. **SEO** - Sitemap, meta tags
-5. **PWA** - Progressive Web App
-6. **i18n** - Internacionalização (PT/EN)
-7. **Dark Mode** - Tema escuro/claro
-8. **Comments** - Sistema de comentários em projetos
-
-## 📦 Deploy
-
-### Backend
-- Railway, Render, Heroku, ou AWS
-- Configure variáveis de ambiente
-- PostgreSQL no Railway/Supabase/AWS RDS
-
-### Frontend
-- Vercel (recomendado para Next.js)
+**Recommended platforms:**
+- Vercel (optimal for Next.js)
 - Netlify
-- Configure NEXT_PUBLIC_API_URL
+- Cloudflare Pages
 
-## 🤝 Contribuindo
+**Requirements:**
+- Set `NEXT_PUBLIC_API_URL` to your backend URL
+- Enable ISR/SSR if needed
 
-Este é um projeto template. Personalize conforme sua necessidade:
+## 🎨 Customization
 
-1. Altere cores no `tailwind.config.ts`
-2. Adicione seus projetos no seed
-3. Configure suas redes sociais
-4. Adicione seu GitHub token
+1. **Colors**: Edit `frontend/tailwind.config.ts`
+2. **Personal Info**: Update via Admin Panel or seed data
+3. **Projects**: Add via Admin Panel or modify `backend/prisma/seed.ts`
+4. **GitHub Stats**: Add your GitHub token in `.env`
 
-## 📝 Licença
+## 🛠️ Available Scripts
+
+### Backend
+```bash
+npm run dev              # Development server
+npm run build            # Build for production
+npm start                # Production server
+npm run prisma:generate  # Generate Prisma Client
+npm run prisma:migrate   # Run migrations
+npm run prisma:seed      # Seed database
+npm run prisma:studio    # Open Prisma Studio
+```
+
+### Frontend
+```bash
+npm run dev              # Development server
+npm run build            # Build for production
+npm start                # Production server
+npm run lint             # Run ESLint
+```
+
+## 🐳 Docker Commands
+
+```bash
+# Start all services
+docker-compose up
+
+# Start in background
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# Rebuild images
+docker-compose up --build
+
+# View logs
+docker-compose logs -f
+
+# Access database
+docker-compose exec postgres psql -U portfolio -d portfolio_db
+```
+
+## 📊 Sample Data
+
+The seed includes:
+- ✅ 30 diverse projects across all categories
+- ✅ 15 skills with proficiency levels
+- ✅ 29 technology tags with colors
+- ✅ 1 admin user
+- ✅ Sample site settings
+
+Categories:
+- 5 **Full Stack** projects
+- 5 **Frontend** projects
+- 5 **Backend** projects
+- 5 **AI/ML** projects
+- 5 **Cloud** projects
+- 3 **Mobile** projects
+- 2 **DevOps** projects
+
+## 🤝 Contributing
+
+This is a template project. Feel free to:
+1. Fork and customize for your needs
+2. Submit issues for bugs
+3. Suggest new features
+4. Share improvements
+
+## 📝 License
 
 MIT
 
-## 🆘 Suporte
+## 🆘 Support
 
-Para dúvidas sobre a implementação:
-- Revise a documentação do [Next.js](https://nextjs.org/docs)
-- Consulte a documentação do [Prisma](https://www.prisma.io/docs)
-- Veja exemplos do [Shadcn/UI](https://ui.shadcn.com/)
+For implementation questions:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Shadcn/UI Examples](https://ui.shadcn.com/)
 
 ---
 
-**Desenvolvido com ❤️ usando as melhores tecnologias modernas**
+**Built with ❤️ using modern best practices**
+
+**Ready to deploy! 🚀**

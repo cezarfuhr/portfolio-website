@@ -1,0 +1,322 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER MODEL
+// ============================================
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  VIEWER
+}
+
+// ============================================
+// PROJECT MODEL
+// ============================================
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  longDescription String? @db.Text
+
+  // Technologies
+  technologies String[]
+  category    Category
+
+  // Links
+  githubUrl   String?
+  demoUrl     String?
+  imageUrl    String?
+  images      String[]
+
+  // Metadata
+  featured    Boolean  @default(false)
+  status      Status   @default(DRAFT)
+  views       Int      @default(0)
+  likes       Int      @default(0)
+
+  // GitHub Integration
+  githubRepo  String?  @unique
+  githubStars Int?     @default(0)
+  githubForks Int?     @default(0)
+  githubLanguage String?
+
+  // Dates
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  tags        Tag[]    @relation("ProjectTags")
+
+  @@index([status, featured])
+  @@index([category])
+  @@index([slug])
+  @@map("projects")
+}
+
+enum Category {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  MOBILE
+  AI_ML
+  CLOUD
+  DEVOPS
+  DATA_SCIENCE
+  BLOCKCHAIN
+  GAME_DEV
+  OTHER
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// ============================================
+// TAG MODEL
+// ============================================
+model Tag {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+  color    String?   @default("#3B82F6")
+  projects Project[] @relation("ProjectTags")
+
+  createdAt DateTime @default(now())
+
+  @@map("tags")
+}
+
+// ============================================
+// SKILL MODEL
+// ============================================
+model Skill {
+  id          String       @id @default(cuid())
+  name        String
+  category    SkillCategory
+  level       Int          @default(50) // 0-100
+  icon        String?
+  color       String?      @default("#3B82F6")
+  order       Int          @default(0)
+  yearsOfExp  Int?
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([category, order])
+  @@map("skills")
+}
+
+enum SkillCategory {
+  FRONTEND
+  BACKEND
+  DATABASE
+  DEVOPS
+  CLOUD
+  AI_ML
+  MOBILE
+  TOOLS
+  SOFT_SKILLS
+  OTHER
+}
+
+// ============================================
+// EXPERIENCE MODEL (Timeline)
+// ============================================
+model Experience {
+  id          String    @id @default(cuid())
+  company     String
+  position    String
+  description String?   @db.Text
+  location    String?
+  employmentType EmploymentType @default(FULL_TIME)
+
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+
+  skills      String[]  // Technologies used
+  achievements String[] // Key achievements
+
+  companyLogo String?
+  companyUrl  String?
+
+  order       Int       @default(0)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([startDate])
+  @@map("experiences")
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  FREELANCE
+  CONTRACT
+  INTERNSHIP
+}
+
+// ============================================
+// EDUCATION MODEL
+// ============================================
+model Education {
+  id          String    @id @default(cuid())
+  institution String
+  degree      String
+  field       String
+  description String?   @db.Text
+
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+
+  grade       String?
+  location    String?
+  logo        String?
+  url         String?
+
+  order       Int       @default(0)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([startDate])
+  @@map("education")
+}
+
+// ============================================
+// CERTIFICATE MODEL
+// ============================================
+model Certificate {
+  id          String    @id @default(cuid())
+  name        String
+  issuer      String
+  issueDate   DateTime
+  expiryDate  DateTime?
+  credentialId String?
+  credentialUrl String?
+
+  description String?   @db.Text
+  skills      String[]
+
+  logo        String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([issueDate])
+  @@map("certificates")
+}
+
+// ============================================
+// SITE SETTINGS MODEL
+// ============================================
+model SiteSettings {
+  id          String   @id @default(cuid())
+
+  // Personal Info
+  fullName    String
+  title       String   // e.g., "Full Stack Developer"
+  bio         String   @db.Text
+  avatar      String?
+  resume      String?  // URL to resume PDF
+
+  // Availability
+  availableForWork Boolean @default(true)
+  availabilityText String? // e.g., "Available for freelance"
+  hourlyRate       String?
+
+  // Contact
+  email       String
+  phone       String?
+  location    String?
+
+  // Social Links
+  github      String?
+  linkedin    String?
+  twitter     String?
+  website     String?
+  medium      String?
+  devto       String?
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String[]
+  ogImage         String?
+
+  // GitHub Stats
+  githubUsername  String?
+
+  // Analytics
+  googleAnalyticsId String?
+
+  updatedAt   DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+// ============================================
+// CONTACT MESSAGE MODEL
+// ============================================
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  replied   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+  @@map("contact_messages")
+}
+
+// ============================================
+// ANALYTICS MODEL
+// ============================================
+model Analytics {
+  id        String   @id @default(cuid())
+  path      String
+  event     String   // page_view, project_view, cv_download, etc
+  metadata  Json?
+
+  userAgent String?
+  ip        String?
+  country   String?
+
+  createdAt DateTime @default(now())
+
+  @@index([event, createdAt])
+  @@index([path])
+  @@map("analytics")
+}

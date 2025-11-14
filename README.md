@@ -82,6 +82,22 @@ This project implements **production-grade security**:
 - **HTTP Client**: Axios
 - **Markdown**: React Markdown
 
+## 🔌 Port Configuration
+
+This project uses a smart port system to avoid conflicts:
+
+### Docker (Default Ports from `.env`)
+- **Frontend**: `3003` → http://localhost:3003
+- **Backend**: `5003` → http://localhost:5003
+- **Database**: `5403` → localhost:5403
+
+### Running Directly with npm
+- **Frontend**: `3000` (Next.js default)
+- **Backend**: `5000` (configured in backend/.env)
+- **Database**: `5432` (PostgreSQL default)
+
+**Note**: The Docker setup uses custom ports (3003, 5003, 5403) to avoid conflicts with other services. You can change these in the `.env` file.
+
 ## 🚀 Quick Start with Docker
 
 The easiest way to run the entire stack:
@@ -95,9 +111,9 @@ cd portfolio-website
 docker-compose up
 
 # Access the application
-# Frontend: http://localhost:3000
-# Backend API: http://localhost:5000
-# Database: localhost:5432
+# Frontend: http://localhost:3003
+# Backend API: http://localhost:5003
+# Database: localhost:5403
 ```
 
 That's it! The application will:
@@ -144,7 +160,7 @@ ADMIN_EMAIL=admin@portfolio.com
 ADMIN_PASSWORD=admin123
 GITHUB_TOKEN=your-github-personal-access-token
 GITHUB_USERNAME=your-github-username
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:3003
 ```
 
 **Setup database:**
@@ -171,7 +187,8 @@ npm run build
 npm start
 ```
 
-Backend will be running at: `http://localhost:5000`
+Backend will be running at: `http://localhost:5003` (when using Docker)
+or `http://localhost:5000` (when running directly with npm)
 
 ### 2. Frontend Setup
 
@@ -186,7 +203,8 @@ npm install
 cp .env.example .env.local
 
 # Edit .env.local
-# NEXT_PUBLIC_API_URL=http://localhost:5000/api
+# NEXT_PUBLIC_API_URL=http://localhost:5003/api (when using Docker)
+# or http://localhost:5000/api (when backend running directly)
 ```
 
 **Run frontend:**
@@ -200,7 +218,8 @@ npm run build
 npm start
 ```
 
-Frontend will be running at: `http://localhost:3000`
+Frontend will be running at: `http://localhost:3003` (when using Docker)
+or `http://localhost:3000` (when running directly with npm)
 
 ## 📁 Project Structure
 

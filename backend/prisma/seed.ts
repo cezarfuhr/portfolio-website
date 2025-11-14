@@ -89,18 +89,22 @@ async function main() {
 
   console.log(`✅ ${tags.length} tags created`);
 
-  // Create sample skills
-  const skills = await Promise.all([
-    // Frontend
-    prisma.skill.create({
-      data: {
-        name: 'React',
-        category: 'FRONTEND',
-        level: 90,
-        yearsOfExp: 4,
-        order: 1,
-      },
-    }),
+  // Create sample skills (only if none exist)
+  const existingSkillsCount = await prisma.skill.count();
+  let skills: any[] = [];
+
+  if (existingSkillsCount === 0) {
+    skills = await Promise.all([
+      // Frontend
+      prisma.skill.create({
+        data: {
+          name: 'React',
+          category: 'FRONTEND',
+          level: 90,
+          yearsOfExp: 4,
+          order: 1,
+        },
+      }),
     prisma.skill.create({
       data: {
         name: 'Next.js',
@@ -232,9 +236,12 @@ async function main() {
         order: 2,
       },
     }),
-  ]);
-
-  console.log(`✅ ${skills.length} skills created`);
+    ]);
+    console.log(`✅ ${skills.length} skills created`);
+  } else {
+    skills = await prisma.skill.findMany();
+    console.log(`ℹ️  ${skills.length} skills already exist, skipping creation`);
+  }
 
   // Create 30 sample projects
   const projects = [
@@ -1337,23 +1344,30 @@ Observabilidade completa para suas aplicações.
     },
   ];
 
-  console.log('🚀 Creating 30 sample projects...');
+  // Create projects only if none exist
+  const existingProjectsCount = await prisma.project.count();
 
-  for (const projectData of projects) {
-    const tagSlugs = projectData.tags;
-    delete projectData.tags;
+  if (existingProjectsCount === 0) {
+    console.log('🚀 Creating 30 sample projects...');
 
-    await prisma.project.create({
-      data: {
-        ...projectData,
-        tags: {
-          connect: tagSlugs.map((slug) => ({ slug })),
+    for (const projectData of projects) {
+      const tagSlugs = projectData.tags;
+      delete projectData.tags;
+
+      await prisma.project.create({
+        data: {
+          ...projectData,
+          tags: {
+            connect: tagSlugs.map((slug) => ({ slug })),
+          },
         },
-      },
-    });
-  }
+      });
+    }
 
-  console.log(`✅ ${projects.length} projects created`);
+    console.log(`✅ ${projects.length} projects created`);
+  } else {
+    console.log(`ℹ️  ${existingProjectsCount} projects already exist, skipping creation`);
+  }
 
   console.log('🎉 Seed completed successfully!');
   console.log('');

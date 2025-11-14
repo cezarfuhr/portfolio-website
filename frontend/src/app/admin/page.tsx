@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,18 +8,9 @@ import { Label } from '@/components/ui/label';
 import apiClient from '@/lib/api';
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    // Check if already logged in
-    const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/admin/dashboard');
-    }
-  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,11 +21,13 @@ export default function AdminLoginPage() {
       const response = await apiClient.auth.login(formData.email, formData.password);
       const { token } = response.data.data;
 
+      // Save to both localStorage AND cookies for middleware
       localStorage.setItem('token', token);
-      router.push('/admin/dashboard');
+      document.cookie = `token=${token}; path=/; max-age=604800`; // 7 days
+
+      window.location.href = '/admin/dashboard';
     } catch (err: any) {
       setError(err.response?.data?.error || 'Invalid credentials');
-    } finally {
       setLoading(false);
     }
   };

@@ -5,8 +5,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies with cache mount (shared across all projects!)
+RUN --mount=type=cache,target=/root/.npm \
+    npm install
 
 # Copy source code
 COPY . .

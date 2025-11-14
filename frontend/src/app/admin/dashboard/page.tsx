@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,18 +8,11 @@ import apiClient from '@/lib/api';
 import { LogOut, FolderKanban, User, Settings, Eye, Heart, BarChart } from 'lucide-react';
 
 export default function AdminDashboardPage() {
-  const router = useRouter();
   const [stats, setStats] = useState<any>(null);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/admin');
-      return;
-    }
-
     async function fetchData() {
       try {
         const [statsRes, userRes] = await Promise.all([
@@ -30,21 +22,23 @@ export default function AdminDashboardPage() {
 
         setStats(statsRes.data.data);
         setUser(userRes.data.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      } catch (error: any) {
+        // On any error, logout
         localStorage.removeItem('token');
-        router.push('/admin');
+        document.cookie = 'token=; path=/; max-age=0';
+        window.location.href = '/admin';
       } finally {
         setLoading(false);
       }
     }
 
     fetchData();
-  }, [router]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    router.push('/admin');
+    document.cookie = 'token=; path=/; max-age=0';
+    window.location.href = '/admin';
   };
 
   if (loading) {

@@ -43,6 +43,23 @@ A complete professional portfolio with Backend (Node.js + Express + Prisma) and 
 - 🏷️ **Tag System** - Organize projects with tags
 - 🌐 **30 Sample Projects** - Pre-seeded with realistic data
 
+## 🔒 Security Features
+
+This project implements **production-grade security**:
+
+- ✅ **Helmet.js** - Security headers (XSS, clickjacking protection)
+- ✅ **CORS** - Configurable origin restrictions
+- ✅ **Rate Limiting** - 100 requests per 15 minutes (configurable)
+- ✅ **JWT Authentication** - Secure token-based auth
+- ✅ **Bcrypt** - Strong password hashing (10 rounds)
+- ✅ **Input Validation** - Zod schema validation
+- ✅ **Docker Security** - Non-root users, read-only filesystems, capability dropping
+- ✅ **SSL/TLS** - HTTPS-only in production
+- ✅ **Environment Variables** - No secrets in code
+- ✅ **Error Handling** - No stack traces in production
+
+**Learn more**: [SECURITY-SUMMARY.md](./SECURITY-SUMMARY.md)
+
 ## 🛠️ Tech Stack
 
 ### Backend
@@ -201,7 +218,8 @@ portfolio-website/
 │   │   ├── services/          # Business logic
 │   │   ├── utils/             # Utilities
 │   │   └── server.ts          # Express server
-│   ├── Dockerfile
+│   ├── Dockerfile             # Development
+│   ├── Dockerfile.prod        # Production
 │   └── package.json
 │
 ├── frontend/                   # Next.js App
@@ -218,12 +236,23 @@ portfolio-website/
 │   │   ├── lib/               # API client, utils
 │   │   ├── types/             # TypeScript types
 │   │   └── middleware.ts      # Route protection
-│   ├── Dockerfile
+│   ├── Dockerfile             # Development
+│   ├── Dockerfile.prod        # Production
 │   └── package.json
 │
-├── docker-compose.yml          # Docker orchestration
-├── .dockerignore
-└── README.md
+├── scripts/                    # Utility scripts
+│   ├── backup.sh              # Database backup
+│   └── restore.sh             # Database restore
+│
+├── docker-compose.yml          # Development
+├── docker-compose.prod.yml     # Production
+├── Makefile.prod              # Production commands
+├── .env.production.example    # Production environment template
+│
+├── PRODUCTION.md              # 📚 Production deployment guide
+├── PRODUCTION-QUICKSTART.md   # 🚀 Quick start (30 min)
+├── SECURITY-SUMMARY.md        # 🔒 Security analysis
+└── README.md                  # This file
 ```
 
 ## 🔑 Default Credentials
@@ -301,9 +330,51 @@ See [API Documentation](./API_DOCUMENTATION.md) for detailed examples.
 
 ## 📦 Deployment
 
-### Backend
+### 🚀 Production Deployment (Recommended)
 
-**Recommended platforms:**
+**Self-hosted with Docker (Proxmox VM + Nginx Proxy Manager)**
+
+This is the **recommended** and **most secure** approach for production deployment.
+
+✅ **Quick Start** (30 minutes): See [PRODUCTION-QUICKSTART.md](./PRODUCTION-QUICKSTART.md)
+
+✅ **Complete Guide**: See [PRODUCTION.md](./PRODUCTION.md)
+
+✅ **Security Analysis**: See [SECURITY-SUMMARY.md](./SECURITY-SUMMARY.md)
+
+**What you get:**
+- 🔒 SSL/TLS encryption (Let's Encrypt)
+- 🛡️ Security hardening (non-root users, read-only filesystems)
+- 📊 Health checks and auto-restart
+- 💾 Automatic daily backups
+- 🔥 Rate limiting and CORS protection
+- 🐳 Isolated Docker network
+- 📈 Production-optimized builds
+
+**Requirements:**
+- Proxmox VM with Ubuntu 22.04
+- Docker and Docker Compose
+- Nginx Proxy Manager
+- Domain name
+
+**Quick deployment:**
+```bash
+# Copy production environment
+cp .env.production.example .env
+
+# Build and deploy
+make -f Makefile.prod build
+make -f Makefile.prod up
+
+# Configure Nginx Proxy Manager with SSL
+# Done! Your portfolio is live 🎉
+```
+
+---
+
+### ☁️ Alternative Cloud Platforms
+
+#### Backend
 - Railway
 - Render
 - Heroku
@@ -314,9 +385,7 @@ See [API Documentation](./API_DOCUMENTATION.md) for detailed examples.
 - Environment variables configured
 - Run migrations before starting
 
-### Frontend
-
-**Recommended platforms:**
+#### Frontend
 - Vercel (optimal for Next.js)
 - Netlify
 - Cloudflare Pages
@@ -355,6 +424,8 @@ npm run lint             # Run ESLint
 
 ## 🐳 Docker Commands
 
+### Development
+
 ```bash
 # Start all services
 docker-compose up
@@ -374,6 +445,45 @@ docker-compose logs -f
 # Access database
 docker-compose exec postgres psql -U portfolio -d portfolio_db
 ```
+
+### Production
+
+```bash
+# Build production images
+make -f Makefile.prod build
+
+# Start services
+make -f Makefile.prod up
+
+# Stop services
+make -f Makefile.prod down
+
+# Restart services
+make -f Makefile.prod restart
+
+# View logs
+make -f Makefile.prod logs
+
+# Check status and resource usage
+make -f Makefile.prod status
+
+# Create database backup
+make -f Makefile.prod backup
+
+# Restore database
+make -f Makefile.prod restore
+
+# Update application
+make -f Makefile.prod update
+
+# Run health check
+make -f Makefile.prod health
+
+# Run security check
+make -f Makefile.prod security-check
+```
+
+See [Makefile.prod](./Makefile.prod) for all available commands.
 
 ## 📊 Sample Data
 
@@ -405,6 +515,15 @@ This is a template project. Feel free to:
 
 MIT
 
+## 📚 Documentation
+
+| Document | Description | Time to Read |
+|----------|-------------|--------------|
+| [PRODUCTION-QUICKSTART.md](./PRODUCTION-QUICKSTART.md) | Deploy to production in 30 minutes | ⏱️ 5 min |
+| [PRODUCTION.md](./PRODUCTION.md) | Complete production deployment guide | ⏱️ 15 min |
+| [SECURITY-SUMMARY.md](./SECURITY-SUMMARY.md) | Security features and analysis | ⏱️ 10 min |
+| [Makefile.prod](./Makefile.prod) | All production commands reference | ⏱️ 2 min |
+
 ## 🆘 Support
 
 For implementation questions:
@@ -412,8 +531,12 @@ For implementation questions:
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [Shadcn/UI Examples](https://ui.shadcn.com/)
 
+For deployment:
+- See [PRODUCTION.md](./PRODUCTION.md) - Complete deployment guide
+- See [SECURITY-SUMMARY.md](./SECURITY-SUMMARY.md) - Security details
+
 ---
 
 **Built with ❤️ using modern best practices**
 
-**Ready to deploy! 🚀**
+**🚀 Production-ready with enterprise-grade security**

@@ -1,0 +1,107 @@
+.PHONY: help build up down restart logs status clean backup restore update security-check
+
+# Default target
+help:
+	@echo "Portfolio Production Makefile"
+	@echo ""
+	@echo "Available commands:"
+	@echo "  make build          - Build production images"
+	@echo "  make up             - Start services"
+	@echo "  make down           - Stop services"
+	@echo "  make restart        - Restart all services"
+	@echo "  make logs           - View logs (follow mode)"
+	@echo "  make status         - Show container status"
+	@echo "  make clean          - Clean up Docker resources"
+	@echo "  make backup         - Create database backup"
+	@echo "  make restore        - Restore database from backup"
+	@echo "  make update         - Update and restart services"
+	@echo "  make security-check - Run security checks"
+	@echo "  make health         - Run health check"
+
+# Build production images
+build:
+	@echo "Building production images..."
+	docker compose -f docker-compose.prod.yml build --no-cache
+
+# Start services
+up:
+	@echo "Starting services..."
+	docker compose -f docker-compose.prod.yml up -d
+	@echo "Waiting for services to be healthy..."
+	@sleep 10
+	@make status
+
+# Stop services
+down:
+	@echo "Stopping services..."
+	docker compose -f docker-compose.prod.yml down
+
+# Restart services
+restart:
+	@echo "Restarting services..."
+	docker compose -f docker-compose.prod.yml restart
+	@make status
+
+# View logs
+logs:
+	docker compose -f docker-compose.prod.yml logs -f
+
+# Show status
+status:
+	@echo "=== Container Status ==="
+	@docker compose -f docker-compose.prod.yml ps
+	@echo ""
+	@echo "=== Resource Usage ==="
+	@docker stats --no-stream portfolio-frontend portfolio-backend portfolio-db
+
+# Clean up Docker resources
+clean:
+	@echo "Cleaning up Docker resources..."
+	@read -p "This will remove unused images and containers. Continue? (y/N): " confirm; \
+	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
+		docker system prune -af; \
+		echo "Cleanup complete."; \
+	else \
+		echo "Cleanup cancelled."; \
+	fi
+
+# Create backup
+backup:
+	@echo "Creating database backup..."
+	@./scripts/backup.sh
+
+# Restore from backup
+restore:
+	@echo "Restoring database..."
+	@./scripts/restore.sh
+
+# Update application
+update:
+	@echo "Updating application..."
+	git pull
+	@make build
+	@make down
+	@make up
+	@echo "Update complete."
+
+# Security check
+security-check:
+	@echo "Running security checks..."
+	@echo ""
+	@echo "=== Docker Image Scan ==="
+	@echo "Scanning frontend..."
+	-docker scan portfolio-frontend || echo "Scan unavailable or failed"
+	@echo ""
+	@echo "Scanning backend..."
+	-docker scan portfolio-backend || echo "Scan unavailable or failed"
+	@echo ""
+	@echo "=== Security Headers Check ==="
+	@echo "Check manually at: https://securityheaders.com/"
+	@echo ""
+	@echo "=== SSL Check ==="
+	@echo "Check manually at: https://www.ssllabs.com/ssltest/"
+
+# Health check
+health:
+	@echo "Running health check..."
+	@./scripts/health-check.sh
